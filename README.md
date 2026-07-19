@@ -1,190 +1,408 @@
 # EduPlay 🐘
 
-## About
+> A colorful, Duolingo-style educational game app for Sri Lankan school children, built with **Flutter** and **Supabase**.
 
-EduPlay is a colorful, Duolingo-style educational mobile app built for Sri
-Lankan school children aged 6–13. It turns core school subjects into
-bite-sized, level-based quiz games with instant feedback, encouraging
-consistent daily learning through streaks and star-based progress.
+![Flutter](https://img.shields.io/badge/Flutter-3.x-blue?logo=flutter)
+![Dart](https://img.shields.io/badge/Dart-3.x-blue?logo=dart)
+![Supabase](https://img.shields.io/badge/Supabase-Backend-green?logo=supabase)
+![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20Web-blue)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-The app is built with **Flutter** on the frontend and **Supabase** (Auth,
-PostgreSQL database, Row Level Security) on the backend, supporting two
-account types: **Students**, who play through leveled quizzes across 4
-subjects, and **Teachers**, who get a read-only dashboard to track every
-student's progress.
+---
 
-## Features
+# 📖 About
 
-- 🔐 **Secure authentication** — email/password registration and login via
-  Supabase Auth (no guest access; only registered accounts can log in)
-- 🎒 **Student experience** — Home dashboard, 4 subject categories, level
-  maps with locked/unlocked/completed states and star ratings
-- 👩‍🏫 **Teacher dashboard** — read-only view of every registered student's
-  streak, total stars, and levels completed per subject
-- 📚 **4 subjects**: Mathematics, English, Sinhala (real Sinhala letters
-  and vocabulary), and Science
-- 🧩 **Leveled quiz content** — questions tagged to specific levels so
-  difficulty increases as students progress, with a difficulty-tier
-  fallback for levels not yet fully populated
-- ⏱️ **Gameplay mechanics** — 30-second timer per question, hint and skip
-  options, 5-heart lives system, confetti celebration on correct answers
-- 🔥 **Daily streaks** — tracked per student and incremented once per
-  calendar day
-- 🎨 **Custom playful UI** — gradient backgrounds, bouncy buttons, floating
-  cloud animations, and subject-themed color coding
-- ☁️ **Cloud-backed progress** — all quiz results and streaks persist to
-  Supabase, so progress survives app reinstalls (as long as the same
-  account logs back in)
+EduPlay is a colorful, Duolingo-inspired educational mobile application developed for **Sri Lankan school children**. The application transforms traditional learning into an engaging game experience by combining quizzes, rewards, levels, and daily learning streaks.
 
-## Screenshots
+Students can learn through interactive quizzes across four core school subjects while earning stars and unlocking new levels. Teachers can access a dedicated dashboard to monitor student progress and performance.
 
-> _Add screenshots of the Splash screen, Register/Login screen, Home
-> dashboard, Level map, Quiz screen, Reward screen, and Teacher dashboard
-> here before submitting/publishing._
+The application is developed using **Flutter** for the frontend and **Supabase** for backend services including authentication, PostgreSQL database management, and Row Level Security (RLS).
 
-```
-docs/screenshots/
-  splash.png
-  auth.png
-  home.png
-  level_map.png
-  quiz.png
-  reward.png
-  teacher_dashboard.png
-```
+---
 
-## Tech Stack
+# ✨ Features
+
+## 👨‍🎓 Student Features
+
+- Secure email/password registration and login
+- Interactive Home Dashboard
+- Four educational subjects
+- Level-based learning system
+- Locked and unlocked level progression
+- Star rewards for completed levels
+- Daily learning streak tracking
+- 30-second timer for every question
+- Hint and Skip options
+- Five-heart lives system
+- Instant answer feedback
+- Confetti reward animations
+- Cloud-synchronized progress
+- Profile management and logout
+
+---
+
+## 👩‍🏫 Teacher Features
+
+- Teacher account registration
+- Read-only Teacher Dashboard
+- View all registered students
+- Monitor learning streaks
+- View total earned stars
+- Track completed levels
+- Monitor progress for every subject
+
+---
+
+## 📚 Subjects
+
+- ➕ Mathematics
+- 🔤 English
+- 🇱🇰 Sinhala
+- 🔬 Science
+
+---
+
+# 🛠 Tech Stack
 
 | Layer | Technology |
-|---|---|
-| Frontend framework | Flutter (Dart) |
-| State management | Provider |
-| Backend / BaaS | Supabase (PostgreSQL, Auth, Row Level Security) |
+|---------|------------|
+| Frontend | Flutter |
+| Language | Dart |
+| Backend | Supabase |
+| Database | PostgreSQL |
+| Authentication | Supabase Auth |
+| State Management | Provider |
+| Security | Row Level Security (RLS) |
 | Fonts | Google Fonts (Baloo 2) |
 | Animations | flutter_animate, confetti |
 
-## Project Structure
+---
+
+# 📸 Screenshots
+
+> Add your application screenshots before publishing the project.
+
+| Splash Screen | Login |
+|---------------|-------|
+| ![](docs/screenshots/splash.png) | ![](docs/screenshots/auth.png) |
+
+| Home | Level Map |
+|------|-----------|
+| ![](docs/screenshots/home.png) | ![](docs/screenshots/level_map.png) |
+
+| Quiz | Reward |
+|------|--------|
+| ![](docs/screenshots/quiz.png) | ![](docs/screenshots/reward.png) |
+
+| Teacher Dashboard |
+|-------------------|
+| ![](docs/screenshots/teacher_dashboard.png) |
+
+---
+
+# 🎥 Demo
+
+Demo video:
+
+> *(Add your YouTube or Google Drive demo link here.)*
+
+Example:
 
 ```
+https://youtu.be/your-demo-video
+```
+
+---
+
+# 📂 Project Structure
+
+```text
 lib/
-  main.dart                       # Supabase init + auth gate (routes by role)
-  theme/
-    app_theme.dart                # Colors, gradients, text styles
-  models/
-    models.dart                   # GameCategory, GameLevel, QuizQuestion, StudentSummary
-  services/
-    supabase_service.dart         # All Supabase queries in one place
-  providers/
-    app_state.dart                # Logged-in profile, progress cache, teacher data
-  widgets/
-    common_widgets.dart           # BouncyButton, CategoryCard, FloatingClouds, SoftCard, etc.
-  screens/
-    splash_screen.dart            # Logo + Start button
-    auth/
-      auth_screen.dart            # Register (Student/Teacher) / Login toggle
-    home/
-      home_screen.dart            # Student dashboard
-      main_shell.dart             # Bottom nav shell (Home / Games / Profile)
-    games/
-      games_screen.dart           # All subjects grid
-      level_map_screen.dart       # Level selection per subject
-    quiz/
-      quiz_screen.dart            # Quiz gameplay
-      reward_screen.dart          # Post-level results
-    profile/
-      profile_screen.dart         # Student profile, streak, logout
-    teacher/
-      teacher_dashboard_screen.dart # Read-only student progress view
-pubspec.yaml
-README.md
+│
+├── main.dart
+├── theme/
+│   └── app_theme.dart
+│
+├── models/
+│   └── models.dart
+│
+├── providers/
+│   └── app_state.dart
+│
+├── services/
+│   └── supabase_service.dart
+│
+├── widgets/
+│   └── common_widgets.dart
+│
+├── screens/
+│   ├── splash_screen.dart
+│   ├── auth/
+│   │   └── auth_screen.dart
+│   ├── home/
+│   │   ├── home_screen.dart
+│   │   └── main_shell.dart
+│   ├── games/
+│   │   ├── games_screen.dart
+│   │   └── level_map_screen.dart
+│   ├── quiz/
+│   │   ├── quiz_screen.dart
+│   │   └── reward_screen.dart
+│   ├── profile/
+│   │   └── profile_screen.dart
+│   └── teacher/
+│       └── teacher_dashboard_screen.dart
+│
+├── pubspec.yaml
+└── README.md
 ```
 
-## Getting Started
+---
 
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd eduplay
-   ```
+# ⚙️ Database
 
-2. **Install dependencies**
-   ```bash
-   flutter pub get
-   ```
+The application uses three main database tables.
 
-3. **Configure Supabase**
-   The Supabase project URL and anon key are set in `lib/main.dart`:
-   ```dart
-   const _supabaseUrl = 'https://your-project.supabase.co';
-   const _supabaseAnonKey = 'your-anon-key';
-   ```
-   Replace these with your own Supabase project's values if running against
-   a different backend. See the [Database Setup](#requirements) notes below
-   for the schema this app expects.
+### profiles
 
-4. **Run the app**
-   ```bash
-   flutter run
-   ```
-   Or target a specific platform:
-   ```bash
-   flutter run -d chrome     # Web
-   flutter run -d windows    # Windows desktop
-   ```
+Stores user information.
 
-## Requirements
+- User ID
+- Name
+- Email
+- Role (Student/Teacher)
+- Daily streak
+- Last active date
 
-- Flutter SDK 3.22 or later (uses Dart 3 records and `Color.withValues`)
-- A Supabase project with:
-  - **`profiles`** table — `id (uuid, PK, FK → auth.users)`, `name (text)`,
-    `email (text)`, `role (text, 'student'/'teacher')`, `streak_days (int)`,
-    `last_active_date (date)`
-  - **`questions`** table — `id (uuid, PK)`, `category (text)`,
-    `difficulty (text)`, `level_number (int, nullable)`, `prompt (text)`,
-    `options (jsonb)`, `correct_index (int)`, `explanation (text)`
-  - **`user_progress`** table — `id (uuid, PK)`, `user_id (uuid, FK)`,
-    `category (text)`, `level_number (int)`, `stars_earned (int)`,
-    `completed_at (timestamptz)`, with a unique constraint on
-    `(user_id, category, level_number)`
-  - Row Level Security enabled on all 3 tables, a `handle_new_user` trigger
-    on `auth.users` to populate `profiles` at signup, and an `is_teacher()`
-    helper function backing the teacher-view-all policies
-- "Confirm email" disabled under Authentication → Providers → Email
-  (recommended for local development/testing)
+### questions
 
-## Future Enhancements
+Stores quiz questions.
 
-- Populate all 30 levels per subject with fully unique question sets
-  (currently levels 1–5 are fully tagged; later levels fall back to a
-  shared difficulty-tier pool)
-- Achievements/badges system with unlockable rewards
-- Leaderboards (weekly, monthly, school-wide, friends)
-- Offline mode with local caching and background sync
-- Push notifications for daily reminders and streak alerts
-- Parent dashboard alongside the teacher dashboard
-- Audio narration and sound effects for younger, pre-literate users
-- Support for additional subjects and localized UI in Sinhala/Tamil
+- Category
+- Difficulty
+- Level number
+- Question
+- Multiple-choice options
+- Correct answer
+- Explanation
 
-## Author
+### user_progress
 
-**Pabodha**
-Registration No: SEU/IS/20/ICT/083 · Index No: ICT4601
-Department of Information & Communication Technology
-Faculty of Technology, South Eastern University of Sri Lanka
+Stores completed quiz progress.
 
-## License
+- User ID
+- Subject
+- Level
+- Stars earned
+- Completion date
 
-This project is provided for academic and personal use. If you plan to
-publish or distribute it, consider adding an open-source license such as
-[MIT](https://choosealicense.com/licenses/mit/) — add a `LICENSE` file to
-the repository root to formalize this.
+---
 
-## Acknowledgements
+# 🔐 Authentication
 
-- **South Eastern University of Sri Lanka**, Department of ICT, for the
-  academic context this project was developed under
-- [Supabase](https://supabase.com) for the open-source backend platform
-- [Flutter](https://flutter.dev) and the Dart team
-- [Google Fonts](https://fonts.google.com) (Baloo 2 typeface)
-- Open-source package authors: `flutter_animate`, `confetti`, `provider`,
-  `supabase_flutter`
+EduPlay uses **Supabase Authentication**.
+
+Features include:
+
+- Student Registration
+- Teacher Registration
+- Secure Login
+- Logout
+- Protected Routes
+- Automatic Profile Creation
+- Role-based Navigation
+
+---
+
+# ☁️ Supabase Configuration
+
+The project includes:
+
+- Row Level Security (RLS)
+- Secure authentication
+- Auto-created user profiles
+- Student and Teacher roles
+- Teacher read-only policies
+- Daily streak management
+- Quiz progress synchronization
+- Seeded question data
+
+---
+
+# 🚀 Getting Started
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/pabodha032/EduPlay.git
+```
+
+Go to the project folder.
+
+```bash
+cd EduPlay
+```
+
+---
+
+## 2. Install Dependencies
+
+```bash
+flutter pub get
+```
+
+---
+
+## 3. Configure Supabase
+
+Open
+
+```text
+lib/main.dart
+```
+
+Replace with your own project values if needed.
+
+```dart
+const supabaseUrl = "YOUR_SUPABASE_URL";
+const supabaseAnonKey = "YOUR_SUPABASE_ANON_KEY";
+```
+
+---
+
+## 4. Run the Application
+
+Android
+
+```bash
+flutter run
+```
+
+Web
+
+```bash
+flutter run -d chrome
+```
+
+Windows
+
+```bash
+flutter run -d windows
+```
+
+---
+
+# 📌 Requirements
+
+- Flutter SDK 3.x
+- Dart SDK
+- Android Studio or VS Code
+- Supabase Project
+- PostgreSQL Database
+
+---
+
+# 🎮 How It Works
+
+### Student Flow
+
+1. Register an account
+2. Login
+3. Choose a subject
+4. Select a level
+5. Answer quiz questions
+6. Earn stars
+7. Unlock new levels
+8. Increase daily streak
+
+### Teacher Flow
+
+1. Register as Teacher
+2. Login
+3. Open Teacher Dashboard
+4. View all students
+5. Monitor progress
+6. Track stars and completed levels
+
+---
+
+# ➕ Adding New Questions
+
+Questions can be inserted directly through the Supabase SQL Editor.
+
+Example:
+
+```sql
+INSERT INTO questions
+(category, difficulty, level_number, prompt, options, correct_index, explanation)
+VALUES
+(
+'math',
+'Easy',
+6,
+'What is 5 + 5?',
+'["8","9","10","11"]',
+2,
+'5 + 5 = 10.'
+);
+```
+
+No Flutter code changes are required after adding new questions.
+
+---
+
+# 🚀 Future Enhancements
+
+- Complete all 30 levels per subject
+- Achievement and badge system
+- Weekly and monthly leaderboards
+- Parent dashboard
+- Offline mode
+- Push notifications
+- AI-generated quiz questions
+- Audio pronunciation
+- Sound effects
+- Sinhala, Tamil, and English localization
+- Multiplayer quiz mode
+
+---
+
+# 👩‍💻 Author
+
+**Pabodha Sewwandi**
+
+Final Year ICT (Software Engineering) Undergraduate
+
+Faculty of Technology
+
+South Eastern University of Sri Lanka
+
+**GitHub**
+
+https://github.com/pabodha032
+
+**LinkedIn**
+
+https://www.linkedin.com/in/your-linkedin-profile
+
+---
+
+# 🙏 Acknowledgements
+
+- Flutter
+- Dart
+- Supabase
+- Google Fonts
+- South Eastern University of Sri Lanka
+
+---
+
+# 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## ⭐ Support
+
+If you like this project, consider giving it a ⭐ on GitHub.
