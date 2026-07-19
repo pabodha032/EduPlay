@@ -100,6 +100,29 @@ The application is developed using **Flutter** for the frontend and **Supabase**
 | ![](docs/screenshots/reward.png) | ![](docs/screenshots/teacher_dashboard.png) |
 
 ---
+# 🗄️ Supabase Database Screenshots
+
+The application uses Supabase PostgreSQL database for authentication, question management, and student progress tracking.
+
+## Profiles Table
+
+Stores user information including student and teacher accounts.
+
+![Profiles Table](docs/screenshots/supabase_profiles.png)
+
+
+## Questions Table
+
+Stores educational quiz questions, categories, difficulty levels, and answers.
+
+![Questions Table](docs/screenshots/supabase_questions.png)
+
+
+## User Progress Table
+
+Stores student learning progress, completed levels, and earned stars.
+
+![User Progress Table](docs/screenshots/supabase_user_progress.png)
 
 # 🎥 Demo
 
