@@ -362,8 +362,10 @@ class _QuizScreenState extends State<QuizScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Text(
-                          '💡 It is not "${q.options[(q.correctIndex + 1) % q.options.length]}"',
-                          style: AppText.bodyMuted),
+                        '💡 It is not "${q.options[(q.correctIndex + 1) % q.options.length]}"',
+                        style: AppText.bodyMuted.copyWith(
+                            color: const Color.fromARGB(255, 217, 80, 38)),
+                      ),
                     ),
                 ],
               ),
