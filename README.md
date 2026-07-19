@@ -1,109 +1,190 @@
 # EduPlay 🐘
 
-A colorful, Duolingo-style educational game app for Sri Lankan school
-children, built with Flutter + Supabase.
+## About
 
-**Subjects:** Mathematics, English, Sinhala (with real Sinhala letters), Science.
+EduPlay is a colorful, Duolingo-style educational mobile app built for Sri
+Lankan school children aged 6–13. It turns core school subjects into
+bite-sized, level-based quiz games with instant feedback, encouraging
+consistent daily learning through streaks and star-based progress.
 
-## Supabase setup (already applied)
+The app is built with **Flutter** on the frontend and **Supabase** (Auth,
+PostgreSQL database, Row Level Security) on the backend, supporting two
+account types: **Students**, who play through leveled quizzes across 4
+subjects, and **Teachers**, who get a read-only dashboard to track every
+student's progress.
 
-The following has already been set up directly in the Supabase SQL Editor
-for this project — noted here for reference in case you ever need to
-rebuild against a fresh Supabase project:
+## Features
 
-1. **RLS policies** — lock down `profiles`, `questions`, and `user_progress`
-   so users can only read/write their own data (except `questions`, which
-   is readable by anyone logged in).
-2. **Signup trigger** (`handle_new_user`) — auto-creates a `profiles` row
-   (name, email, role) the moment someone registers, reading the name and
-   role from the sign-up metadata.
-3. **Teacher role support** — a `role` column on `profiles`
-   ('student'/'teacher'), an `is_teacher()` helper function, and policies
-   letting teacher accounts view (read-only) every student's profile and
-   progress.
-4. **Seeded questions** — sample questions tagged to specific levels
-   (via a `level_number` column on `questions`) across all 4 subjects.
+- 🔐 **Secure authentication** — email/password registration and login via
+  Supabase Auth (no guest access; only registered accounts can log in)
+- 🎒 **Student experience** — Home dashboard, 4 subject categories, level
+  maps with locked/unlocked/completed states and star ratings
+- 👩‍🏫 **Teacher dashboard** — read-only view of every registered student's
+  streak, total stars, and levels completed per subject
+- 📚 **4 subjects**: Mathematics, English, Sinhala (real Sinhala letters
+  and vocabulary), and Science
+- 🧩 **Leveled quiz content** — questions tagged to specific levels so
+  difficulty increases as students progress, with a difficulty-tier
+  fallback for levels not yet fully populated
+- ⏱️ **Gameplay mechanics** — 30-second timer per question, hint and skip
+  options, 5-heart lives system, confetti celebration on correct answers
+- 🔥 **Daily streaks** — tracked per student and incremented once per
+  calendar day
+- 🎨 **Custom playful UI** — gradient backgrounds, bouncy buttons, floating
+  cloud animations, and subject-themed color coding
+- ☁️ **Cloud-backed progress** — all quiz results and streaks persist to
+  Supabase, so progress survives app reinstalls (as long as the same
+  account logs back in)
 
-If you ever need any of this SQL again (e.g. setting up a new Supabase
-project from scratch), just ask — it's quick to regenerate.
+## Screenshots
 
-Also worth checking: **Authentication → Providers → Email** — if "Confirm
-email" is turned on, new users must click a link in their inbox before they
-can log in. Turn it off during development if you want registration to log
-people in immediately.
+> _Add screenshots of the Splash screen, Register/Login screen, Home
+> dashboard, Level map, Quiz screen, Reward screen, and Teacher dashboard
+> here before submitting/publishing._
 
-## Running the app
-
-```bash
-flutter pub get
-flutter run
+```
+docs/screenshots/
+  splash.png
+  auth.png
+  home.png
+  level_map.png
+  quiz.png
+  reward.png
+  teacher_dashboard.png
 ```
 
-The Supabase URL and anon key are already wired into `lib/main.dart`.
+## Tech Stack
 
-## How it works
+| Layer | Technology |
+|---|---|
+| Frontend framework | Flutter (Dart) |
+| State management | Provider |
+| Backend / BaaS | Supabase (PostgreSQL, Auth, Row Level Security) |
+| Fonts | Google Fonts (Baloo 2) |
+| Animations | flutter_animate, confetti |
 
-- **Register** → `supabase.auth.signUp()` creates the account; the
-  `handle_new_user` trigger copies the name + chosen role into `profiles`.
-- **Login** → only works for accounts that already registered (no guest
-  mode) — exactly as you asked.
-- **Teacher Dashboard** — at registration, choosing "Teacher" instead of
-  "Student" sets `profiles.role = 'teacher'`. Teacher accounts skip the
-  student Home/Games/Profile tabs entirely and land on a read-only
-  dashboard listing every student, their streak, total stars, and levels
-  completed per subject.
-- **Home screen** greets the user with `Hello, {name}` pulled from `profiles`.
-- **4 subjects** are hardcoded in `lib/models/models.dart` (they never
-  change, so there's no `categories` table).
-- **Questions** are fetched live from the `questions` table per category;
-  up to 5 are picked per level attempt — exact `level_number` matches
-  first, then same-difficulty rows to fill any gap.
-- **Progress** (stars per level) is saved to `user_progress` after each
-  quiz and re-fetched to unlock the next level.
-- **Streak** increments once per calendar day on `profiles.streak_days`,
-  handled in `SupabaseService.bumpStreakIfNewDay()`.
-
-## Project structure
+## Project Structure
 
 ```
 lib/
-  main.dart                       # Supabase init + auth gate (branches by role)
-  theme/app_theme.dart            # Colors, gradients, text styles
-  models/models.dart              # GameCategory (fixed 4), GameLevel, QuizQuestion, StudentSummary
-  services/supabase_service.dart  # All Supabase queries in one place
-  providers/app_state.dart        # Logged-in profile + progress cache + teacher data
-  widgets/common_widgets.dart     # BouncyButton, CategoryCard, FloatingClouds, etc.
+  main.dart                       # Supabase init + auth gate (routes by role)
+  theme/
+    app_theme.dart                # Colors, gradients, text styles
+  models/
+    models.dart                   # GameCategory, GameLevel, QuizQuestion, StudentSummary
+  services/
+    supabase_service.dart         # All Supabase queries in one place
+  providers/
+    app_state.dart                # Logged-in profile, progress cache, teacher data
+  widgets/
+    common_widgets.dart           # BouncyButton, CategoryCard, FloatingClouds, SoftCard, etc.
   screens/
-    splash_screen.dart            # "EduPlay" logo + Start button
-    auth/auth_screen.dart         # Register (Student/Teacher) / Login toggle
-    home/{home_screen, main_shell}.dart
-    games/{games_screen, level_map_screen}.dart
-    quiz/{quiz_screen, reward_screen}.dart
-    profile/profile_screen.dart   # Name, email, streak, logout
-    teacher/teacher_dashboard_screen.dart  # Read-only student progress view
+    splash_screen.dart            # Logo + Start button
+    auth/
+      auth_screen.dart            # Register (Student/Teacher) / Login toggle
+    home/
+      home_screen.dart            # Student dashboard
+      main_shell.dart             # Bottom nav shell (Home / Games / Profile)
+    games/
+      games_screen.dart           # All subjects grid
+      level_map_screen.dart       # Level selection per subject
+    quiz/
+      quiz_screen.dart            # Quiz gameplay
+      reward_screen.dart          # Post-level results
+    profile/
+      profile_screen.dart         # Student profile, streak, logout
+    teacher/
+      teacher_dashboard_screen.dart # Read-only student progress view
+pubspec.yaml
+README.md
 ```
 
-## Adding more questions
+## Getting Started
 
-Questions are tagged to a **specific level** via the `level_number` column
-on the `questions` table, so Level 1 shows different content than Level 2,
-Level 3, etc. — not just a reshuffle of the same pool.
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd eduplay
+   ```
 
-**How the app picks questions for a level:**
-1. Rows tagged with that exact `level_number` are used first.
-2. If there aren't 5 yet, it fills in with other rows of the same
-   `difficulty` (Easy for levels 1–10, Medium 11–20, Hard 21–30) that
-   aren't tied to a different level.
-3. If still short of 5, it pads with anything else from that category.
+2. **Install dependencies**
+   ```bash
+   flutter pub get
+   ```
 
-To add more, just insert rows directly in Supabase's SQL Editor or Table
-Editor — no app code changes needed:
+3. **Configure Supabase**
+   The Supabase project URL and anon key are set in `lib/main.dart`:
+   ```dart
+   const _supabaseUrl = 'https://your-project.supabase.co';
+   const _supabaseAnonKey = 'your-anon-key';
+   ```
+   Replace these with your own Supabase project's values if running against
+   a different backend. See the [Database Setup](#requirements) notes below
+   for the schema this app expects.
 
-```sql
-insert into questions (category, difficulty, level_number, prompt, options, correct_index, explanation)
-values ('math', 'Easy', 6, 'Your question here?', '["A","B","C","D"]', 0, 'Why A is correct.');
-```
+4. **Run the app**
+   ```bash
+   flutter run
+   ```
+   Or target a specific platform:
+   ```bash
+   flutter run -d chrome     # Web
+   flutter run -d windows    # Windows desktop
+   ```
 
-Keep tagging more `level_number`s over time to flesh out the remaining
-levels per subject — nothing breaks in the meantime, since
-untagged/partially-covered levels just fall back gracefully.
+## Requirements
+
+- Flutter SDK 3.22 or later (uses Dart 3 records and `Color.withValues`)
+- A Supabase project with:
+  - **`profiles`** table — `id (uuid, PK, FK → auth.users)`, `name (text)`,
+    `email (text)`, `role (text, 'student'/'teacher')`, `streak_days (int)`,
+    `last_active_date (date)`
+  - **`questions`** table — `id (uuid, PK)`, `category (text)`,
+    `difficulty (text)`, `level_number (int, nullable)`, `prompt (text)`,
+    `options (jsonb)`, `correct_index (int)`, `explanation (text)`
+  - **`user_progress`** table — `id (uuid, PK)`, `user_id (uuid, FK)`,
+    `category (text)`, `level_number (int)`, `stars_earned (int)`,
+    `completed_at (timestamptz)`, with a unique constraint on
+    `(user_id, category, level_number)`
+  - Row Level Security enabled on all 3 tables, a `handle_new_user` trigger
+    on `auth.users` to populate `profiles` at signup, and an `is_teacher()`
+    helper function backing the teacher-view-all policies
+- "Confirm email" disabled under Authentication → Providers → Email
+  (recommended for local development/testing)
+
+## Future Enhancements
+
+- Populate all 30 levels per subject with fully unique question sets
+  (currently levels 1–5 are fully tagged; later levels fall back to a
+  shared difficulty-tier pool)
+- Achievements/badges system with unlockable rewards
+- Leaderboards (weekly, monthly, school-wide, friends)
+- Offline mode with local caching and background sync
+- Push notifications for daily reminders and streak alerts
+- Parent dashboard alongside the teacher dashboard
+- Audio narration and sound effects for younger, pre-literate users
+- Support for additional subjects and localized UI in Sinhala/Tamil
+
+## Author
+
+**Pabodha**
+Registration No: SEU/IS/20/ICT/083 · Index No: ICT4601
+Department of Information & Communication Technology
+Faculty of Technology, South Eastern University of Sri Lanka
+
+## License
+
+This project is provided for academic and personal use. If you plan to
+publish or distribute it, consider adding an open-source license such as
+[MIT](https://choosealicense.com/licenses/mit/) — add a `LICENSE` file to
+the repository root to formalize this.
+
+## Acknowledgements
+
+- **South Eastern University of Sri Lanka**, Department of ICT, for the
+  academic context this project was developed under
+- [Supabase](https://supabase.com) for the open-source backend platform
+- [Flutter](https://flutter.dev) and the Dart team
+- [Google Fonts](https://fonts.google.com) (Baloo 2 typeface)
+- Open-source package authors: `flutter_animate`, `confetti`, `provider`,
+  `supabase_flutter`
