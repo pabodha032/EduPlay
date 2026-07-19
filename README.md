@@ -1,120 +1,408 @@
 # EduPlay 🐘
 
-A colorful, Duolingo-style educational game app for Sri Lankan school
-children, built with Flutter + Supabase.
+> A colorful, Duolingo-style educational game app for Sri Lankan school children, built with **Flutter** and **Supabase**.
 
-**Subjects:** Mathematics, English, Sinhala (with real Sinhala letters), Science.
+![Flutter](https://img.shields.io/badge/Flutter-3.x-blue?logo=flutter)
+![Dart](https://img.shields.io/badge/Dart-3.x-blue?logo=dart)
+![Supabase](https://img.shields.io/badge/Supabase-Backend-green?logo=supabase)
+![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20Web-blue)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## ⚠️ Before you do anything else
+---
 
-You shared your Supabase **service_role** secret key in chat earlier. That key
-bypasses all security rules and gives full access to your database — please
-rotate it now if you haven't already:
-**Supabase Dashboard → Project Settings → API → service_role → Generate new secret.**
+# 📖 About
 
-This app only ever uses the **anon/public key**, which is safe to ship inside
-the Flutter app (it's constrained entirely by your Row Level Security
-policies).
+EduPlay is a colorful, Duolingo-inspired educational mobile application developed for **Sri Lankan school children**. The application transforms traditional learning into an engaging game experience by combining quizzes, rewards, levels, and daily learning streaks.
 
-## One-time Supabase setup
+Students can learn through interactive quizzes across four core school subjects while earning stars and unlocking new levels. Teachers can access a dedicated dashboard to monitor student progress and performance.
 
-Run these SQL files, in order, in **Supabase Dashboard → SQL Editor**:
+The application is developed using **Flutter** for the frontend and **Supabase** for backend services including authentication, PostgreSQL database management, and Row Level Security (RLS).
 
-1. `sql/rls_policies.sql` — locks down the 3 tables so users can only touch
-   their own data (skip if you already ran these).
-2. `sql/trigger.sql` — auto-creates a `profiles` row (name + email) the
-   moment someone registers.
-3. `sql/teacher_role.sql` — adds a `role` column to `profiles`
-   ('student'/'teacher') and lets teacher accounts view (read-only) every
-   student's profile and progress.
-4. `sql/seed_questions_leveled.sql` — adds sample questions tagged to
-   specific levels across all 4 subjects.
+---
 
-Also check **Authentication → Providers → Email**: if "Confirm email" is
-turned on, new users must click a link in their inbox before they can log in.
-Turn it off during development if you want registration to log people in
-immediately.
+# ✨ Features
 
-## Running the app
+## 👨‍🎓 Student Features
+
+- Secure email/password registration and login
+- Interactive Home Dashboard
+- Four educational subjects
+- Level-based learning system
+- Locked and unlocked level progression
+- Star rewards for completed levels
+- Daily learning streak tracking
+- 30-second timer for every question
+- Hint and Skip options
+- Five-heart lives system
+- Instant answer feedback
+- Confetti reward animations
+- Cloud-synchronized progress
+- Profile management and logout
+
+---
+
+## 👩‍🏫 Teacher Features
+
+- Teacher account registration
+- Read-only Teacher Dashboard
+- View all registered students
+- Monitor learning streaks
+- View total earned stars
+- Track completed levels
+- Monitor progress for every subject
+
+---
+
+## 📚 Subjects
+
+- ➕ Mathematics
+- 🔤 English
+- 🇱🇰 Sinhala
+- 🔬 Science
+
+---
+
+# 🛠 Tech Stack
+
+| Layer | Technology |
+|---------|------------|
+| Frontend | Flutter |
+| Language | Dart |
+| Backend | Supabase |
+| Database | PostgreSQL |
+| Authentication | Supabase Auth |
+| State Management | Provider |
+| Security | Row Level Security (RLS) |
+| Fonts | Google Fonts (Baloo 2) |
+| Animations | flutter_animate, confetti |
+
+---
+
+# 📸 Screenshots
+
+> Add your application screenshots before publishing the project.
+
+| Splash Screen | Login |
+|---------------|-------|
+| ![](docs/screenshots/splash.png) | ![](docs/screenshots/auth.png) |
+
+| Home | Level Map |
+|------|-----------|
+| ![](docs/screenshots/home.png) | ![](docs/screenshots/level_map.png) |
+
+| Quiz | Reward |
+|------|--------|
+| ![](docs/screenshots/quiz.png) | ![](docs/screenshots/reward.png) |
+
+| Teacher Dashboard |
+|-------------------|
+| ![](docs/screenshots/teacher_dashboard.png) |
+
+---
+
+# 🎥 Demo
+
+Demo video:
+
+> *(Add your YouTube or Google Drive demo link here.)*
+
+Example:
+
+```
+https://youtu.be/your-demo-video
+```
+
+---
+
+# 📂 Project Structure
+
+```text
+lib/
+│
+├── main.dart
+├── theme/
+│   └── app_theme.dart
+│
+├── models/
+│   └── models.dart
+│
+├── providers/
+│   └── app_state.dart
+│
+├── services/
+│   └── supabase_service.dart
+│
+├── widgets/
+│   └── common_widgets.dart
+│
+├── screens/
+│   ├── splash_screen.dart
+│   ├── auth/
+│   │   └── auth_screen.dart
+│   ├── home/
+│   │   ├── home_screen.dart
+│   │   └── main_shell.dart
+│   ├── games/
+│   │   ├── games_screen.dart
+│   │   └── level_map_screen.dart
+│   ├── quiz/
+│   │   ├── quiz_screen.dart
+│   │   └── reward_screen.dart
+│   ├── profile/
+│   │   └── profile_screen.dart
+│   └── teacher/
+│       └── teacher_dashboard_screen.dart
+│
+├── pubspec.yaml
+└── README.md
+```
+
+---
+
+# ⚙️ Database
+
+The application uses three main database tables.
+
+### profiles
+
+Stores user information.
+
+- User ID
+- Name
+- Email
+- Role (Student/Teacher)
+- Daily streak
+- Last active date
+
+### questions
+
+Stores quiz questions.
+
+- Category
+- Difficulty
+- Level number
+- Question
+- Multiple-choice options
+- Correct answer
+- Explanation
+
+### user_progress
+
+Stores completed quiz progress.
+
+- User ID
+- Subject
+- Level
+- Stars earned
+- Completion date
+
+---
+
+# 🔐 Authentication
+
+EduPlay uses **Supabase Authentication**.
+
+Features include:
+
+- Student Registration
+- Teacher Registration
+- Secure Login
+- Logout
+- Protected Routes
+- Automatic Profile Creation
+- Role-based Navigation
+
+---
+
+# ☁️ Supabase Configuration
+
+The project includes:
+
+- Row Level Security (RLS)
+- Secure authentication
+- Auto-created user profiles
+- Student and Teacher roles
+- Teacher read-only policies
+- Daily streak management
+- Quiz progress synchronization
+- Seeded question data
+
+---
+
+# 🚀 Getting Started
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/pabodha032/EduPlay.git
+```
+
+Go to the project folder.
+
+```bash
+cd EduPlay
+```
+
+---
+
+## 2. Install Dependencies
 
 ```bash
 flutter pub get
+```
+
+---
+
+## 3. Configure Supabase
+
+Open
+
+```text
+lib/main.dart
+```
+
+Replace with your own project values if needed.
+
+```dart
+const supabaseUrl = "YOUR_SUPABASE_URL";
+const supabaseAnonKey = "YOUR_SUPABASE_ANON_KEY";
+```
+
+---
+
+## 4. Run the Application
+
+Android
+
+```bash
 flutter run
 ```
 
-The Supabase URL and anon key are already wired into `lib/main.dart`.
+Web
 
-## How it works
-
-- **Register** → `supabase.auth.signUp()` creates the account; the
-  `handle_new_user` trigger copies the name + chosen role into `profiles`.
-- **Login** → only works for accounts that already registered (no guest
-  mode) — exactly as you asked.
-- **Teacher Dashboard** — at registration, choosing "Teacher" instead of
-  "Student" sets `profiles.role = 'teacher'`. Teacher accounts skip the
-  student Home/Games/Profile tabs entirely and land on a read-only
-  dashboard listing every student, their streak, total stars, and levels
-  completed per subject (`sql/teacher_role.sql` sets up the RLS policies
-  that allow this).
-- **Home screen** greets the user with `Hello, {name}` pulled from `profiles`.
-- **4 subjects** are hardcoded in `lib/models/models.dart` (they never
-  change, so there's no `categories` table).
-- **Questions** are fetched live from the `questions` table per category;
-  5 are randomly picked per level attempt.
-- **Progress** (stars per level) is saved to `user_progress` after each
-  quiz and re-fetched to unlock the next level.
-- **Streak** increments once per calendar day on `profiles.streak_days`,
-  handled in `SupabaseService.bumpStreakIfNewDay()`.
-
-## Project structure
-
-```
-lib/
-  main.dart                       # Supabase init + auth gate
-  theme/app_theme.dart            # Colors, gradients, text styles
-  models/models.dart              # GameCategory (fixed 4), GameLevel, QuizQuestion
-  services/supabase_service.dart  # All Supabase queries in one place
-  providers/app_state.dart        # Logged-in profile + progress cache
-  widgets/common_widgets.dart     # BouncyButton, CategoryCard, FloatingClouds, etc.
-  screens/
-    splash_screen.dart            # "EduPlay" logo + Start button
-    auth/auth_screen.dart         # Register / Login toggle
-    home/{home_screen, main_shell}.dart
-    games/{games_screen, level_map_screen}.dart
-    quiz/{quiz_screen, reward_screen}.dart
-    profile/profile_screen.dart   # Name, email, streak, logout
-sql/
-  rls_policies.sql
-  trigger.sql
-  seed_questions.sql
+```bash
+flutter run -d chrome
 ```
 
-## Adding more questions
+Windows
 
-Questions can now be tagged to a **specific level** via the `level_number`
-column, so Level 1 shows different content than Level 2, Level 3, etc. —
-not just a reshuffle of the same pool.
+```bash
+flutter run -d windows
+```
 
-- `sql/seed_questions_leveled.sql` — the current seed data, with every row
-  tagged to a level. This is what you should be running (see below).
-- `sql/seed_questions.sql` and `sql/seed_questions_advanced.sql` are the
-  earlier, untagged versions — superseded, kept only for reference.
+---
 
-**To reset and reload:**
+# 📌 Requirements
+
+- Flutter SDK 3.x
+- Dart SDK
+- Android Studio or VS Code
+- Supabase Project
+- PostgreSQL Database
+
+---
+
+# 🎮 How It Works
+
+### Student Flow
+
+1. Register an account
+2. Login
+3. Choose a subject
+4. Select a level
+5. Answer quiz questions
+6. Earn stars
+7. Unlock new levels
+8. Increase daily streak
+
+### Teacher Flow
+
+1. Register as Teacher
+2. Login
+3. Open Teacher Dashboard
+4. View all students
+5. Monitor progress
+6. Track stars and completed levels
+
+---
+
+# ➕ Adding New Questions
+
+Questions can be inserted directly through the Supabase SQL Editor.
+
+Example:
+
 ```sql
-alter table questions add column if not exists level_number int;
-truncate table questions restart identity;
--- then run sql/seed_questions_leveled.sql
+INSERT INTO questions
+(category, difficulty, level_number, prompt, options, correct_index, explanation)
+VALUES
+(
+'math',
+'Easy',
+6,
+'What is 5 + 5?',
+'["8","9","10","11"]',
+2,
+'5 + 5 = 10.'
+);
 ```
 
-**How the app picks questions for a level:**
-1. Rows tagged with that exact `level_number` are used first.
-2. If there aren't 5 yet, it fills in with other rows of the same
-   `difficulty` (Easy for levels 1–10, Medium 11–20, Hard 21–30) that
-   aren't tied to a different level.
-3. If still short of 5, it pads with anything else from that category.
+No Flutter code changes are required after adding new questions.
 
-So you can keep adding rows with a specific `level_number` over time to
-flesh out more of the 30 levels per subject — nothing breaks in the
-meantime, since untagged/partially-covered levels just fall back
-gracefully.
+---
+
+# 🚀 Future Enhancements
+
+- Complete all 30 levels per subject
+- Achievement and badge system
+- Weekly and monthly leaderboards
+- Parent dashboard
+- Offline mode
+- Push notifications
+- AI-generated quiz questions
+- Audio pronunciation
+- Sound effects
+- Sinhala, Tamil, and English localization
+- Multiplayer quiz mode
+
+---
+
+# 👩‍💻 Author
+
+**Pabodha Sewwandi**
+
+Final Year ICT (Software Engineering) Undergraduate
+
+Faculty of Technology
+
+South Eastern University of Sri Lanka
+
+**GitHub**
+
+https://github.com/pabodha032
+
+**LinkedIn**
+
+https://www.linkedin.com/in/your-linkedin-profile
+
+---
+
+# 🙏 Acknowledgements
+
+- Flutter
+- Dart
+- Supabase
+- Google Fonts
+- South Eastern University of Sri Lanka
+
+---
+
+# 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## ⭐ Support
+
+If you like this project, consider giving it a ⭐ on GitHub.
