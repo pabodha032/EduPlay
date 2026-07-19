@@ -50,7 +50,8 @@ class _TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Teacher Dashboard', style: AppText.h1),
-                          Text('Hello, ${app.name ?? '...'} 👋', style: AppText.bodyMuted),
+                          Text('Hello, ${app.name ?? '...'} 👋',
+                              style: AppText.bodyMuted),
                         ],
                       ),
                     ),
@@ -58,9 +59,13 @@ class _TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                       onPressed: () async {
                         await context.read<AppState>().logout();
                         if (!context.mounted) return;
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const SplashScreen()), (r) => false);
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (_) => const SplashScreen()),
+                            (r) => false);
                       },
-                      icon: const Icon(Icons.logout_rounded, color: AppColors.error),
+                      icon: const Icon(Icons.logout_rounded,
+                          color: AppColors.error),
                     ),
                   ],
                 ),
@@ -80,7 +85,9 @@ class _TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                           padding: const EdgeInsets.all(20),
                           children: [
                             const SizedBox(height: 40),
-                            Center(child: Text('No students registered yet.', style: AppText.body)),
+                            Center(
+                                child: Text('No students registered yet.',
+                                    style: AppText.body)),
                           ],
                         );
                       }
@@ -89,7 +96,10 @@ class _TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                         itemCount: students.length,
                         itemBuilder: (context, i) {
                           final s = students[i];
-                          return _StudentCard(student: s).animate(delay: (i * 60).ms).fadeIn().slideY(begin: 0.08, end: 0);
+                          return _StudentCard(student: s)
+                              .animate(delay: (i * 60).ms)
+                              .fadeIn()
+                              .slideY(begin: 0.08, end: 0);
                         },
                       );
                     },
@@ -118,26 +128,42 @@ class _StudentCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                CircleAvatar(radius: 22, backgroundColor: AppColors.blue.withValues(alpha: 0.15), child: const Text('🐘', style: TextStyle(fontSize: 20))),
+                CircleAvatar(
+                    radius: 22,
+                    backgroundColor: const Color.fromARGB(255, 51, 190, 241)
+                        .withValues(alpha: 0.60),
+                    child: const Text('🐘', style: TextStyle(fontSize: 20))),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(student.name, style: AppText.body.copyWith(fontWeight: FontWeight.w700)),
-                      Text(student.email, style: AppText.bodyMuted.copyWith(fontSize: 12)),
+                      Text(student.name,
+                          style: AppText.body
+                              .copyWith(fontWeight: FontWeight.w700)),
+                      Text(student.email,
+                          style: AppText.bodyMuted.copyWith(fontSize: 12)),
                     ],
                   ),
                 ),
-                StatPill(emoji: '🔥', value: '${student.streakDays}d', color: AppColors.orange),
+                StatPill(
+                    emoji: '🔥',
+                    value: '${student.streakDays}d',
+                    color: AppColors.orange),
               ],
             ),
             const SizedBox(height: 14),
             Row(
               children: [
-                Expanded(child: _MiniStat(label: 'Levels Done', value: '${student.totalLevelsCompleted}')),
+                Expanded(
+                    child: _MiniStat(
+                        label: 'Levels Done',
+                        value: '${student.totalLevelsCompleted}')),
                 const SizedBox(width: 10),
-                Expanded(child: _MiniStat(label: 'Total Stars', value: '${student.totalStars} ⭐')),
+                Expanded(
+                    child: _MiniStat(
+                        label: 'Total Stars',
+                        value: '${student.totalStars} ⭐')),
               ],
             ),
             if (student.completedLevelsByCategory.isNotEmpty) ...[
@@ -146,11 +172,19 @@ class _StudentCard extends StatelessWidget {
                 spacing: 8,
                 runSpacing: 8,
                 children: student.completedLevelsByCategory.entries.map((e) {
-                  final cat = GameCategory.all.firstWhere((c) => c.id == e.key, orElse: () => GameCategory.all.first);
+                  final cat = GameCategory.all.firstWhere((c) => c.id == e.key,
+                      orElse: () => GameCategory.all.first);
                   return Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    decoration: BoxDecoration(color: cat.color.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(AppRadius.pill)),
-                    child: Text('${cat.emoji} ${cat.title}: ${e.value}', style: AppText.bodyMuted.copyWith(fontSize: 12, color: cat.color, fontWeight: FontWeight.w700)),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                        color: cat.color.withValues(alpha: 0.14),
+                        borderRadius: BorderRadius.circular(AppRadius.pill)),
+                    child: Text('${cat.emoji} ${cat.title}: ${e.value}',
+                        style: AppText.bodyMuted.copyWith(
+                            fontSize: 12,
+                            color: cat.color,
+                            fontWeight: FontWeight.w700)),
                   );
                 }).toList(),
               ),
@@ -171,7 +205,9 @@ class _MiniStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(color: AppColors.bg, borderRadius: BorderRadius.circular(AppRadius.sm)),
+      decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 92, 150, 250),
+          borderRadius: BorderRadius.circular(AppRadius.sm)),
       alignment: Alignment.center,
       child: Column(
         children: [

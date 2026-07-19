@@ -61,7 +61,11 @@ class AppColors {
   static const LinearGradient contentGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    colors: [Color(0xFFEAF2FF), Color(0xFFF3EFFF), Color(0xFFFFF6EC)],
+    colors: [
+      Color.fromARGB(255, 106, 142, 201),
+      Color.fromARGB(255, 198, 180, 252),
+      Color.fromARGB(255, 183, 209, 249)
+    ],
   );
 }
 
