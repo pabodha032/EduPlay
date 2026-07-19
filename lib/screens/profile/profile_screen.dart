@@ -63,14 +63,71 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
+                    // SoftCard(
+                    //   child: Column(
+                    //     children: [
+                    //       _InfoRow(label: 'Name', value: app.name ?? '-'),
+                    //       _InfoRow(
+                    //           label: 'Email',
+                    //           value: app.email ?? '-',
+                    //           isLast: true),
+                    //     ],
+                    //   ),
+                    // ),
                     SoftCard(
                       child: Column(
                         children: [
-                          _InfoRow(label: 'Name', value: app.name ?? '-'),
-                          _InfoRow(
-                              label: 'Email',
-                              value: app.email ?? '-',
-                              isLast: true),
+                          Row(
+                            children: [
+                              const Expanded(
+                                child: Text(
+                                  'Name',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 61, 59, 59),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  app.name ?? '-',
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Divider(height: 20),
+                          Row(
+                            children: [
+                              const Expanded(
+                                child: Text(
+                                  'Email',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 61, 59, 59),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  app.email ?? '-',
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),

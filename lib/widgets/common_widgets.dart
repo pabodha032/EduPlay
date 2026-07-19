@@ -286,19 +286,23 @@ class SoftCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;
   final Color? color;
+  final Color? labelColor;
 
-  const SoftCard(
-      {super.key,
-      required this.child,
-      this.padding = const EdgeInsets.all(16),
-      this.color});
+  const SoftCard({
+    super.key,
+    required this.child,
+    this.padding = const EdgeInsets.all(16),
+    this.color,
+    this.labelColor,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-          color: color ?? Theme.of(context).cardColor,
+          //: color ?? Theme.of(context).cardColor,
+          color: color ?? const Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(AppRadius.lg),
           boxShadow: AppShadows.soft),
       child: child,
