@@ -80,23 +80,24 @@ The application is developed using **Flutter** for the frontend and **Supabase**
 
 # 📸 Screenshots
 
-> Add your application screenshots before publishing the project.
-
 | Splash Screen | Login |
 |---------------|-------|
 | ![](docs/screenshots/splash.png) | ![](docs/screenshots/auth.png) |
+
 
 | Home | Level Map |
 |------|-----------|
 | ![](docs/screenshots/home.png) | ![](docs/screenshots/level_map.png) |
 
-| Quiz | Reward |
-|------|--------|
-| ![](docs/screenshots/quiz.png) | ![](docs/screenshots/reward.png) |
 
-| Teacher Dashboard |
-|-------------------|
-| ![](docs/screenshots/teacher_dashboard.png) |
+| Quiz | Student Profile |
+|------|-----------------|
+| ![](docs/screenshots/quiz.png) | ![](docs/screenshots/student_profile.png) |
+
+
+| Reward | Teacher Dashboard |
+|--------|-------------------|
+| ![](docs/screenshots/reward.png) | ![](docs/screenshots/teacher_dashboard.png) |
 
 ---
 
@@ -326,30 +327,6 @@ flutter run -d windows
 
 ---
 
-# ➕ Adding New Questions
-
-Questions can be inserted directly through the Supabase SQL Editor.
-
-Example:
-
-```sql
-INSERT INTO questions
-(category, difficulty, level_number, prompt, options, correct_index, explanation)
-VALUES
-(
-'math',
-'Easy',
-6,
-'What is 5 + 5?',
-'["8","9","10","11"]',
-2,
-'5 + 5 = 10.'
-);
-```
-
-No Flutter code changes are required after adding new questions.
-
----
 
 # 🚀 Future Enhancements
 
@@ -383,7 +360,7 @@ https://github.com/pabodha032
 
 **LinkedIn**
 
-https://www.linkedin.com/in/your-linkedin-profile
+www.linkedin.com/in/pabodha-sewwandi-1a4131399
 
 ---
 
@@ -394,12 +371,6 @@ https://www.linkedin.com/in/your-linkedin-profile
 - Supabase
 - Google Fonts
 - South Eastern University of Sri Lanka
-
----
-
-# 📄 License
-
-This project is licensed under the MIT License.
 
 ---
 
